@@ -25,4 +25,14 @@ stages:
             backendAzureRmContainerName: 'amitcontainer'
             backendAzureRmKey: '''tf/terraform.tfstate'''
 
-          
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            environmentServiceNameAzureRM: 'raj-app-reg'
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            environmentServiceNameAzureRM: 'raj-app-reg'
