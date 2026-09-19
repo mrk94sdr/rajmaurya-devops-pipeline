@@ -4,41 +4,25 @@ trigger:
 pool:
   name: 'Raj-Agent-Pool'
 
-variables:
-  terraformVersion: '1.8.5'
+stages:
+  - stage: TerraformInstall
+    jobs:
+    -  job: TerraformInstall
+       steps:
+       
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
 
-steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/rajmaurya-devops-pipeline'
+            backendServiceArm: 'raj-app-reg'
+            backendAzureRmResourceGroupName: 'amit_rg'
+            backendAzureRmStorageAccountName: 'amitstorage32345'
+            backendAzureRmContainerName: 'amitcontainer'
+            backendAzureRmKey: '''tf/terraform.tfstate'''
 
-# Checkout GitHub code
-- checkout: self
-  displayName: 'Checkout Terraform Code'
-
-
-# Check Terraform
-- powershell: |
-    terraform version
-  displayName: 'Check Terraform Version'
-
-
-# Initialize Terraform
-- powershell: |
-    terraform init
-  displayName: 'Terraform Init'
-
-
-# Validate Terraform configuration
-- powershell: |
-    terraform validate
-  displayName: 'Terraform Validate'
-
-
-# Create Terraform Plan
-- powershell: |
-    terraform plan -out=tfplan
-  displayName: 'Terraform Plan'
-
-
-# Apply Terraform
-- powershell: |
-    terraform apply -auto-approve tfplan
-  displayName: 'Terraform Apply'
+          
