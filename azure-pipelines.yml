@@ -1,10 +1,44 @@
-trigger: none
-pool: Default
-stages:
-- stage: TerraformInstall
-  jobs:
-  - job: TerraformInstall
-    steps:
-    task:AzureCLI@2
+trigger:
+- main
+
+pool:
+  name: 'Raj-Agent-Pool'
+
+variables:
+  terraformVersion: '1.8.5'
+
+steps:
+
+# Checkout GitHub code
+- checkout: self
+  displayName: 'Checkout Terraform Code'
 
 
+# Check Terraform
+- powershell: |
+    terraform version
+  displayName: 'Check Terraform Version'
+
+
+# Initialize Terraform
+- powershell: |
+    terraform init
+  displayName: 'Terraform Init'
+
+
+# Validate Terraform configuration
+- powershell: |
+    terraform validate
+  displayName: 'Terraform Validate'
+
+
+# Create Terraform Plan
+- powershell: |
+    terraform plan -out=tfplan
+  displayName: 'Terraform Plan'
+
+
+# Apply Terraform
+- powershell: |
+    terraform apply -auto-approve tfplan
+  displayName: 'Terraform Apply'
