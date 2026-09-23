@@ -22,9 +22,9 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/rajmaurya-devops-pipeline'
         backendServiceArm: 'raj-app-reg'
-        backendAzureRmResourceGroupName: 'amit_rg'
-        backendAzureRmStorageAccountName: 'amitstorage32345'
-        backendAzureRmContainerName: 'amitcontainer'
+        backendAzureRmResourceGroupName: 'raj_rg'
+        backendAzureRmStorageAccountName: 'stgraj123'
+        backendAzureRmContainerName: 'raj-container12'
         backendAzureRmKey: 'tf/terraform.tfstate'
 
     - task: TerraformTask@5
