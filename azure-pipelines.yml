@@ -10,11 +10,6 @@ stages:
   - job: TerraformInstall
     steps:
 
-    - task: TerraformInstaller@1
-      displayName: Install Terraform
-      inputs:
-        terraformVersion: '1.16.3'
-
     - task: TerraformTask@5
       displayName: Terraform Init
       inputs:
